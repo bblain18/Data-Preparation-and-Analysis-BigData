@@ -50,7 +50,7 @@ class DownloadConfig(object):
 
   def __init__(self,
                extract_dir=None,
-               manual_dir=None,
+               manual_dir='tensorflow_datasets/manual/',
                download_mode=None,
                compute_stats=None,
                max_examples_per_split=None,
