@@ -19,7 +19,7 @@ class MyDataset(tfds.core.GeneratorBasedBuilder):
     def _split_generators(self, dl_manager):
         # Downloads the data and defines splits
         # download and extract URLs
-        dl_paths = dl_manager.manual_dir #Use manually downloaded data due to option selection on site
+        dl_paths = { 'NRDCtest' : dl_manager.manual_dir} #Use manually downloaded data due to option selection on site
         #pass # TODO: define object
 
     def _generate_examples(self):
