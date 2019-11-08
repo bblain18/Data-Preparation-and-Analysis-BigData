@@ -2,7 +2,7 @@ import tensorflow_datasets.public_api as tfds
 
 #Create a class for the dataset. This class is to be renamed in future iterations
 # TODO: Rename class
-class MyDataset(tfds.core.GeneratorBasedBuilder):
+class testDatasetNRDC(tfds.core.GeneratorBasedBuilder):
     #Start class description
 
     VERSION = tfds.core.Version('0.1.0')
@@ -20,8 +20,14 @@ class MyDataset(tfds.core.GeneratorBasedBuilder):
         # Downloads the data and defines splits
         # download and extract URLs
         dl_paths = { 'NRDCtest' : dl_manager.manual_dir} #Use manually downloaded data due to option selection on site
+        print('run')
         #pass # TODO: define object
 
     def _generate_examples(self):
         # Yields examples from the Dataset
+
         yield 'key', {}
+
+#test function calls
+data = testDatasetNRDC()
+data._split_generators(dl_manager)
