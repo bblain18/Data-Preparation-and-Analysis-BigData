@@ -71,12 +71,15 @@ def find_distribution():
     print("std")
 
 def main():
-    sst_builder = tfds.builder("september_soil_temp")
-    sst_builder.download_and_prepare()
-    sst_train = sst_builder.as_dataset(split="train")
+    sst_train, info = tfds.load("september_soil_temp", split="train", with_info=True)
+
+    print(info)
+
     data = prep_data()
 
-    print(sst_builder.info)
+    for sst_example in sst_train.take(1):  # Only take a single example
+        image, label = sst_example["day"], sst_example["temperature"]
+        print(image)
 
 
 main()

@@ -15,7 +15,7 @@ _DATASET_PATH = "SeptemberSoilTemperature.csv"
 class septemberSoilTemp(tfds.core.GeneratorBasedBuilder):
     #Start class description
 
-    VERSION = tfds.core.Version('0.1.0')
+    VERSION = tfds.core.Version('0.1.1')
 
     def _info(self):
         return tfds.core.DatasetInfo(
@@ -54,7 +54,7 @@ class septemberSoilTemp(tfds.core.GeneratorBasedBuilder):
         return[
             tfds.core.SplitGenerator(
                 name=tfds.Split.TRAIN,
-                num_shards=10,
+                num_shards=1,
                 gen_kwargs={
                     "archive": dataset}
                 )

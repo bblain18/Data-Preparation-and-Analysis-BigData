@@ -35,4 +35,4 @@ Data cleaning:
 
 Analysis: - Avg/day - Avg over month - Varience/day - Varience over month - Std Deviation/day - Std Deviation over month - MADD/day - MADD over month
 
-New error: TypeError: Error while serializing feature temperature (TensorInfo(shape=(), dtype=tf.string)): Expected binary or unicode string, got 12.8
+Current task: print dataset in main
