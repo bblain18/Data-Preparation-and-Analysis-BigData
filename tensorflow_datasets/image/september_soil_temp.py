@@ -26,7 +26,7 @@ class septemberSoilTemp(tfds.core.GeneratorBasedBuilder):
             features=tfds.features.FeaturesDict({
                 "day": tfds.features.ClassLabel(names=["1","2","3","4","5","6","7","8","9","10","11","12","13","14",
                                                     "15","16","17","18","19","20","21","22","23"]), #Each day can be a label
-                "temperature": tfds.features.Text()
+                "temperature": tfds.features.Tensor(shape=(), dtype=tf.float32)
             }),
             urls=[_DATA_URL],
             supervised_keys=("day", "temperature")
@@ -66,7 +66,6 @@ class septemberSoilTemp(tfds.core.GeneratorBasedBuilder):
         # # with tf.io.gfile.GFil(archive, 'rb') as file:
         # #     dataset =
         for feat, targ in archive:
-            print ('Features: {}, Target: {}'.format(feat, targ))
             record = {
                 "day": feat,
                 "temperature": targ,

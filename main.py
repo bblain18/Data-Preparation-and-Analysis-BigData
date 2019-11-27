@@ -1,6 +1,7 @@
 import pandas as pd
 import tensorflow as tf
 import tensorflow_datasets as tfds
+import numpy as np
 #import tensorflow_datasets.image.septermberSoiltemp.py
 
 _DATA_PATH = "datasets/testDataset.csv"
@@ -70,9 +71,12 @@ def find_distribution():
     print("std")
 
 def main():
-    print("main run")
-    # dataset = tfds.load(name="celebahq", split="test")
+    sst_builder = tfds.builder("september_soil_temp")
+    sst_builder.download_and_prepare()
+    sst_train = sst_builder.as_dataset(split="train")
     data = prep_data()
-    findAvgVar(data)
 
-prep_data()
+    print(sst_builder.info)
+
+
+main()
