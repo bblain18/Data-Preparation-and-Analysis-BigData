@@ -1,8 +1,10 @@
 import pandas as pd
+import tensorflow as tf
+import tensorflow_datasets as tfds
 #import tensorflow_datasets.image.septermberSoiltemp.py
 
 _DATA_PATH = "datasets/testDataset.csv"
-_DATASET_PATH = "datasets/SeptemberSoilTemperature.gz"
+_DATASET_PATH = "SeptemberSoilTemperature.csv"
 
 #Data cleaning
 def prep_data():
@@ -10,7 +12,7 @@ def prep_data():
     #Extract header block
     headers = pd.read_csv(_DATA_PATH, header=None, nrows=9)
     #Extract dataset
-    dataset = pd.read_csv(_DATA_PATH, header=None, skiprows=range(0,9))
+    dataset = pd.read_csv(_DATA_PATH, header=None, skiprows=range(0,9), names=["day", "temp"])
 
     ######### Cleaning Headers ##########
     print(headers)
@@ -18,16 +20,16 @@ def prep_data():
 
     ######### Cleaning Dataset ##########
     #Convert data in column 1 to datetime
-    dataset[0] = pd.to_datetime(dataset[0])
+    dataset["day"] = pd.to_datetime(dataset["day"])
     #Extract day from datetime in column 1
-    dataset[0] = pd.DatetimeIndex(dataset[0]).month
+    dataset["day"] = pd.DatetimeIndex(dataset["day"]).day
 
     #Convert data in column 2 to float
-    dataset[1] = dataset[1].astype(float)
+    dataset["temp"] = dataset["temp"].astype(float)
 
     ########### Output Pandas DF to GZ ############
-    dataset.to_csv(_DATASET_PATH, compression='gzip')
-    return dataset[1].tolist()
+    dataset.to_csv(_DATASET_PATH, index=False)
+    return dataset["temp"].tolist()
 
 def update(aggregate, newData):
     (count, mean, M2) = aggregate
@@ -69,7 +71,8 @@ def find_distribution():
 
 def main():
     print("main run")
+    # dataset = tfds.load(name="celebahq", split="test")
     data = prep_data()
     findAvgVar(data)
 
-main()
+prep_data()

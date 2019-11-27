@@ -74,6 +74,7 @@ from tensorflow_datasets.image.quickdraw import QuickdrawBitmap
 from tensorflow_datasets.image.resisc45 import Resisc45
 from tensorflow_datasets.image.rock_paper_scissors import RockPaperScissors
 from tensorflow_datasets.image.scene_parse_150 import SceneParse150
+from tensorflow_datasets.image.september_soil_temp import septemberSoilTemp
 from tensorflow_datasets.image.shapes3d import Shapes3d
 from tensorflow_datasets.image.smallnorb import Smallnorb
 from tensorflow_datasets.image.so2sat import So2sat
@@ -86,4 +87,3 @@ from tensorflow_datasets.image.uc_merced import UcMerced
 from tensorflow_datasets.image.visual_domain_decathlon import VisualDomainDecathlon
 from tensorflow_datasets.image.voc import Voc
 from tensorflow_datasets.image.wider_face import WiderFace
-from tensorflow_datasets.image.my_dataset import MyDataset  # TODO(my_dataset) Sort alphabetically

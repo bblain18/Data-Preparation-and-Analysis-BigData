@@ -1,0 +1,2 @@
+datasets/SeptemberSoilTemperature.gz 637 d347f1b2e284c018cd8466f78de25272625e380156d60d3f4d8ac6aa70f2f47b
+datasets/SeptemberSoilTemperature.zip 768 eab187f2db0ecbd89d96cd74fac840dabd8475dba4406967ebd7ec48e4125461
