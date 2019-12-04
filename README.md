@@ -1,6 +1,6 @@
-NRDC Data Preparation and Analysis Using Tensorflow
+NRDC Data Preparation and Analysis Using Tensorflow:
 
-Project designed using Python scripts and Tensorflow.
+Project designed using Python scripts and Tensorflow. Dataset consists of Soil Temperatures in Eastern Nevada for the month of September.
 
 Next step: Make dataextraction.py interpret. Test data can be found under tensorflow_datasets/manual
 
