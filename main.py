@@ -71,15 +71,28 @@ def find_distribution():
     print("std")
 
 def main():
+    tf.enable_eager_execution()
+    #Load data
     sst_train, info = tfds.load("september_soil_temp", split="train", with_info=True)
-
-    print(info)
-
-    data = prep_data()
-
-    for sst_example in sst_train.take(1):  # Only take a single example
+    #Shuffle batch
+    sst_train_batch = sst_train.shuffle(20).padded_batch(240, padded_shapes = {"day": [], "temperature": []})
+    # Assert instance
+    assert isinstance(sst_train_batch, tf.data.Dataset)
+    # Numpy matrix vars
+    label = []
+    image = []
+    # Take matrix from batch
+    for sst_example in sst_train_batch:
         image, label = sst_example["day"], sst_example["temperature"]
-        print(image)
+
+    # Analysis
+    mean = np.mean(label.numpy())
+    variance = np.var(label.numpy())
+    std = np.std(label.numpy())
+
+    print("Mean: {}".format(mean))
+    print("Variance: {}".format(variance))
+    print("Standard Deviation: {}".format(std))
 
 
 main()

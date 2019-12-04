@@ -10,12 +10,15 @@ _DATA_URL = "sensor.nevada.edu"
 
 _DATASET_PATH = "SeptemberSoilTemperature.csv"
 
+_NUM_TRAIN_SHARDS = 24
+_NUM_TEST_SHARDS = 217
+
 #Create a class for the dataset. This class is to be renamed in future iterations
 # TODO: Rename class
 class septemberSoilTemp(tfds.core.GeneratorBasedBuilder):
     #Start class description
 
-    VERSION = tfds.core.Version('0.1.1')
+    VERSION = tfds.core.Version('0.1.0')
 
     def _info(self):
         return tfds.core.DatasetInfo(
@@ -51,13 +54,20 @@ class septemberSoilTemp(tfds.core.GeneratorBasedBuilder):
 
         dataset = tf.data.Dataset.from_tensor_slices((day.values, temp.values))
 
+
         return[
             tfds.core.SplitGenerator(
                 name=tfds.Split.TRAIN,
-                num_shards=1,
+                num_shards=_NUM_TRAIN_SHARDS,
                 gen_kwargs={
                     "archive": dataset}
-                )
+                ),
+            tfds.core.SplitGenerator(
+                name=tfds.Split.TEST,
+                num_shards=_NUM_TEST_SHARDS,
+                gen_kwargs={
+                    "archive": dataset}
+                ),
         ]
         #pass # TODO: define object
 
@@ -65,9 +75,11 @@ class septemberSoilTemp(tfds.core.GeneratorBasedBuilder):
         # # Yields examples from the Dataset
         # # with tf.io.gfile.GFil(archive, 'rb') as file:
         # #     dataset =
+        count = 0
         for feat, targ in archive:
+            count += 1
             record = {
                 "day": feat,
                 "temperature": targ,
                 }
-        yield feat, record
+            yield count, record
