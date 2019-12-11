@@ -36,17 +36,17 @@ Data cleaning:
 
 Analysis:
 
-- Avg/day
+[x] Avg/day
 
 [x] Avg over month
 
 - Variance/day
 
-- Variance over month
+[x] Variance over month
 
 - Std Deviation/day
 
-- Std Deviation over month
+[x] Std Deviation over month
 
 - MADD/day
 
