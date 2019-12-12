@@ -58,19 +58,41 @@ def findTempSetForDay(targetDay, batch_day, batch_temp):
     return batch_temp.numpy()[index]
 
 ################# DAILY ANALYSIS ########################################
-def plotDailyAnalysis(days, avgs, min, max, fullMonthInfo, all_val, all_days):
+def plotDailyAnalysis(days, avgs, min, max, var, trend, vtd, fullMonthInfo, all_val, all_days):
     fig = plt.figure()
-    analysis = fig.add_subplot(111)
+    analysisPlot = fig.add_subplot(221)
+    analysisTrend = fig.add_subplot(222)
+    analysisVariance = fig.add_subplot(223)
     # analysis.scatter(all_days, all_val)
-    analysis.scatter(days, avgs, label='Mean temperature')
-    analysis.scatter(days, min, label='Minimum temperature')
-    analysis.scatter(days, max, label='Maximum temperature')
+    analysisPlot.plot(days, avgs, label='Mean temperature')
+    analysisPlot.plot(days, min, label='Minimum temperature')
+    analysisPlot.plot(days, max, label='Maximum temperature')
+    analysisPlot.scatter(days, avgs, label='Mean temperature')
+    analysisPlot.scatter(days, min, label='Minimum temperature')
+    analysisPlot.scatter(days, max, label='Maximum temperature')
+    analysisPlot.set_xlabel('Day')
+    analysisPlot.set_ylabel('Temperature degC')
+    analysisPlot.set_title('Soil Temperatures per Day')
+
+    analysisTrend.bar(days, trend, label='Change by day')
+    analysisTrend.plot(days, vtd, label='Variance to date', color='orange')
+    analysisTrend.set_xlabel('Day')
+    analysisTrend.set_ylabel('Percent change')
+    analysisTrend.set_title('Temperature Trend')
+
+    analysisVariance.bar(days, var, label='Variance by day')
+    analysisVariance.set_xlabel('Day')
+    analysisVariance.set_ylabel('Temperature degC')
+    analysisVariance.set_title('Temperature Variance over Day')
+
+
+    fig.tight_layout()
 
     props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
-    plt.gcf().text(0.09, 0.15, fullMonthInfo, fontsize=14,
+    plt.gcf().text(0.7, 0.3, fullMonthInfo, fontsize=14,
         verticalalignment='top', bbox=props)
-    plt.subplots_adjust(left=0.3)
-    plt.title('September Soil Temperatures per Day')
+    # plt.subplots_adjust(left=0.3)
+    plt.suptitle('September Soil Temperature Trends')
     plt.show()
 
 def dailyAnalysis(batch_day, batch_temp):
@@ -78,6 +100,11 @@ def dailyAnalysis(batch_day, batch_temp):
     list_avg = []
     list_min = []
     list_max = []
+    originalDay = 0
+    currentavg = 0
+    list_vtd = []
+    list_trend = []
+    list_variance = []
 
     for day in range(1, 31):
         dailySet = findTempSetForDay(day, batch_day, batch_temp)
@@ -85,14 +112,23 @@ def dailyAnalysis(batch_day, batch_temp):
             list_avg.append(np.mean(dailySet))
             list_min.append(np.min(dailySet))
             list_max.append(np.max(dailySet))
+            list_variance.append(np.var(dailySet))
         else:
             list_avg.append(0)
             list_min.append(0)
             list_max.append(0)
+            list_variance.append(0)
+        if day is 1:
+            list_trend.append(originalDay)
+            list_vtd.append(originalDay)
+        else:
+            list_trend.append((list_avg[-1]-list_avg[-2])/list_avg[-2])
+            currentavg = np.mean(list_avg)
+            list_vtd.append((list_avg[-1]-currentavg)/currentavg)
         list_days.append(day)
 
     fullMonthInfo = fullMonthAnalysis(batch_temp)
-    plotDailyAnalysis(list_days, list_avg, list_min, list_max, fullMonthInfo, batch_temp, batch_day)
+    plotDailyAnalysis(list_days, list_avg, list_min, list_max, list_variance, list_trend, list_vtd, fullMonthInfo, batch_temp, batch_day)
 ##################################################################
 
 def fullMonthAnalysis(batch_temp):

@@ -10,8 +10,8 @@ _DATA_URL = "sensor.nevada.edu"
 
 _DATASET_PATH = "SeptemberSoilTemperature.csv"
 
-_NUM_TRAIN_SHARDS = 24
-_NUM_TEST_SHARDS = 217
+_NUM_TRAIN_SHARDS = 74
+_NUM_TEST_SHARDS = 669
 
 #Create a class for the dataset. This class is to be renamed in future iterations
 # TODO: Rename class
